@@ -230,4 +230,39 @@ public class Book {
         Book book = new Book(bookID, title, author, publishDate, isbn, description, genre);
         return book;   
     }
+    
+    // Helper method for use only in the return book method
+    private static void removeBookAndUserRow(int bookID, int userID) throws SQLException{
+        // Connection
+        Connection connection = DatabaseManager.getConnection();
+        
+        // SQL delete statement
+        String deleteBookUserRow = "Delete from books_checked_out where user_id = ? "
+                + "and book_id = ?";
+        
+        // PreparedStatement
+        PreparedStatement pstmt = connection.prepareStatement(deleteBookUserRow);
+        pstmt.setInt(1, userID);
+        pstmt.setInt(2, bookID);
+        
+        // Execute query, returnValue never read 
+        int returnValue = pstmt.executeUpdate();
+    }
+    
+    // Helper method for use only in the check out book method
+    private static void addBookAndUserRow(int bookID, int userID) throws SQLException{
+        // Connection
+        Connection connection = DatabaseManager.getConnection();
+        
+        // SQL delete statement
+        String insertBookUserRow = "Insert into books_checked_out values (?, ?)";
+        
+        // PreparedStatement
+        PreparedStatement pstmt = connection.prepareStatement(insertBookUserRow);
+        pstmt.setInt(1, userID);
+        pstmt.setInt(2, bookID);
+        
+        // Execute query, returnValue never read 
+        int returnValue = pstmt.executeUpdate();
+    }
 }
