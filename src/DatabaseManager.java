@@ -5,14 +5,14 @@
 import java.sql.*;
 public class DatabaseManager {
     // Taya's connection information
-    static String jdbcURL = "jdbc:postgresql://localhost:5432/Assignment9FinalRun";
-    static String username = "postgres";
-    static String password = "Taya101603!";
+   // static String jdbcURL = "jdbc:postgresql://localhost:5432/Assignment9FinalRun";
+   // static String username = "postgres";
+   // static String password = "Taya101603!";
 
     // Alyssa's connection information
-    //static String jdbcURL = "jdbc:postgresql://localhost:5432/Assignment9Final";
-   // static String username = "postgres";
-    //static String password = "Acall1";
+    static String jdbcURL = "jdbc:postgresql://localhost:5432/Assignment9Final";
+    static String username = "postgres";
+    static String password = "Acall1";
 
     // Peyton's connection information
 //    static String jdbcURL = 
