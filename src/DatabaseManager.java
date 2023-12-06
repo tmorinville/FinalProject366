@@ -10,9 +10,9 @@ public class DatabaseManager {
     static String password = "Taya101603!";
 
     // Alyssa's connection information
-//    static String jdbcURL = 
-//    static String username = 
-//    static String password = 
+    //static String jdbcURL = "jdbc:postgresql://localhost:5432/Assignment9Final";
+   // static String username = "postgres";
+    //static String password = "Acall1";
 
     // Peyton's connection information
 //    static String jdbcURL = 
