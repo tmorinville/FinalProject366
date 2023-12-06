@@ -33,4 +33,7 @@ public class UserAccount {
         return "User Info " + user_id + "\nName: " + firstname + " " + lastname
                 + "\nPhone Number: " + phone_number + "\nEmail" + email;
     }
+    //view books checked out
+    //check out book
+    //return book
 }
