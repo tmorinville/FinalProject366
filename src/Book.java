@@ -265,4 +265,8 @@ public class Book {
         // Execute query, returnValue never read 
         int returnValue = pstmt.executeUpdate();
     }
+    
+    public void returnBook(int book_id) throws SQLException{
+
+    }
 }
