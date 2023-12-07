@@ -372,12 +372,12 @@ public class Book {
      public void checkOutBook(int bookID, int libraryID) throws SQLException{
          Connection connection = DatabaseManager.getConnection();
          
-         //checkOutBook = Book.updateAvailableCopies(bookID, libraryID, -1);
+         Book.updateAvailableCopies(bookID, libraryID, -1);
      }
     //return book
      public static void returnBook(int bookID, int libraryID) throws SQLException{
          Connection connection = DatabaseManager.getConnection();
-         
-         //returnBook = Book.updateAvailableCopies(bookID, libraryID, 1);
+
+         Book.updateAvailableCopies(bookID, libraryID, 1);
     } 
 }
