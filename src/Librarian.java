@@ -21,7 +21,7 @@ public class Librarian {
     
     public int getLibraryWorksForID() { return libraryWorksForID; }
     
-    public void insertBook(int bookID, int numberOfCopies) throws SQLException{
+    public static void insertBook(int bookID, int libraryID, int numberOfCopies) throws SQLException{
         // Get Book object by ID
         Book bookToInsert = Book.getBookByID(bookID);
         
@@ -34,7 +34,7 @@ public class Librarian {
         
         // PreparedStatement
         PreparedStatement pstmt = connection.prepareStatement(insertNewBook);
-        pstmt.setInt(1, this.libraryWorksForID);
+        pstmt.setInt(1, libraryID);
         pstmt.setInt(2, bookToInsert.getBookID());
         pstmt.setInt(3, numberOfCopies);
         

@@ -62,7 +62,16 @@ public class Client {
                     }
                 }
                 else if(choice == 2){
+                    int insertBookID = Integer.parseInt(MenuHelper.getString("Enter the book id: "));
+                    int numCopies = Integer.parseInt(MenuHelper.getString("Enter the number of copies: "));
                     
+                    try{
+                        Librarian.insertBook(insertBookID, currentLibrarian.getLibraryWorksForID(), numCopies);
+                        System.out.println("Successfully inserted book to library.");
+                    }
+                    catch(SQLException ex){
+                        System.out.println("Invalid book id, unable to add to library.");
+                    }
                 }
             }
         }
@@ -75,8 +84,7 @@ public class Client {
         // Login using user_id
         // If successful login, list all functions and let them choose
         
-        // LIBRARIAN
-        // If successful login, list count of all available books or add a book to the library
+       
         
         // Ending the program
         System.out.println("Ending program.");
