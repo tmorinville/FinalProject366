@@ -40,5 +40,26 @@ public class Librarian {
         int returnValue = pstmt.executeUpdate();
     }
     
+    public static int getTotalNumberOfBooks(int libraryID) throws SQLException{
+        Connection connection = DatabaseManager.getConnection();
+        
+        // SQL select statement
+        String selectNumCopies = "SELECT sum(num_available_copies) from available_copies where library_id = ?";
+        
+        // PreparedStatement
+        PreparedStatement pstmt = connection.prepareStatement(selectNumCopies);
+        pstmt.setInt(1, libraryID);
+        
+        // Execute query
+        ResultSet rs = pstmt.executeQuery();
+        
+        int count = 0;
+        while(rs.next()){
+            count = rs.getInt("sum");
+        }
+        
+        return count;
+    }
+    
     
 }
