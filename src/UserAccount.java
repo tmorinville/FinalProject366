@@ -95,13 +95,5 @@ public class UserAccount {
         // Return ArrayList
         return resultBookList;
     }
-    //check out book
-     public void checkOutBook(int book_id){
-         
-         
-     }
-    //return book
-     public void returnBook(int book_id) throws SQLException{
-
-    } 
+    
 }
