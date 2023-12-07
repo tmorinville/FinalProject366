@@ -92,7 +92,10 @@ public class UserAccount {
         
         
         // SQL select statement
-        String outBooks = "SELECT * FROM books_checked_out WHERE user_id = ?"; //this will be changed today(12/7)
+        String outBooks = "SELECT book.book_id, book.title, book.author, book.publisher from book \n" +
+                "INNER JOIN books_checked_out on book.book_id = books_checked_out.book_id\n" +
+                "INNER JOIN user_account on user_account.user_id = books_checked_out.user_id\n" + 
+                "where user_account.user_id = ? ";
                 
         // PreparedStatement
         PreparedStatement pstmt = connection.prepareStatement(outBooks);

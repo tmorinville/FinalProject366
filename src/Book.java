@@ -376,7 +376,6 @@ public class Book {
      }
     //return book
      public static void returnBook(int bookID, int libraryID, int userID) throws SQLException{
-         Connection connection = DatabaseManager.getConnection();
          Book.removeBookAndUserRow(bookID, userID);
          Book.updateAvailableCopies(bookID, libraryID, 1);
     } 
