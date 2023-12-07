@@ -351,13 +351,13 @@ public class Book {
         // Execute query, returnValue never read 
         int returnValue = pstmt.executeUpdate();
     }
-    private static void updateAvailableCopies(int bookID, int libraryID, int shift){
+    private static void updateAvailableCopies(int bookID, int libraryID, int shift) throws SQLException{
         Connection connection = DatabaseManager.getConnection();
 
         // SQL select statement
-        String updateQuery = "UPDATE available_copies
-                SET copies_available = copies_available + ?
-                WHERE available_copies.book_id = ? and available_copies.library_id = ?"
+        String updateQuery = "update available_copies "
+                + "set num_available_copies = num_available_copies + ?"
+                + " where available_copies.book_id = ? and available_copies.library_id = ?";
 
         // PreparedStatement
         PreparedStatement pstmt = connection.prepareStatement(updateQuery);
