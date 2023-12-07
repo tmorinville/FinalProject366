@@ -82,11 +82,9 @@ public class Library {
         this.phone_number = phone_number;
     }
     
-    
-    
-    
-    
-    
-    
-    
+    public String toString(){
+        return "Library ID: " + library_id + "\nLibrary Name: " + name 
+                + "\n" + street + "\n" + city + " " + state + ", " + zipcode
+                + "\nPhone Number: " + phone_number;
+    }
 }

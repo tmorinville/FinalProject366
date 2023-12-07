@@ -369,7 +369,7 @@ public class Book {
         int execute = pstmt.executeUpdate();
     }
     //check out book
-     public void checkOutBook(int bookID, int libraryID, int userID) throws SQLException{
+     public static void checkOutBook(int bookID, int libraryID, int userID) throws SQLException{
          Connection connection = DatabaseManager.getConnection();
          Book.addBookAndUserRow(bookID, userID);
          Book.updateAvailableCopies(bookID, libraryID, -1);
