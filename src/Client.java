@@ -1,9 +1,10 @@
 /**
  *
- * @author tmmor
+ * @author Taya Morinville
  */
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 public class Client {
     public static void main(String[] args) {
         // Ask if librarian or user, store as a 1 if user and store as a 2 if libarian
@@ -21,6 +22,9 @@ public class Client {
                     
                     badInput = false; // set flag to false if no exception is thrown
                     
+                }
+                catch(InputMismatchException ex){
+                    System.out.println("Invalid id entered.");
                 }
                 catch(SQLException ex){
                     System.out.println("Unable to find user with entered id. Please try again.");

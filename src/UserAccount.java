@@ -38,28 +38,28 @@ public class UserAccount {
                 + "\nPhone Number: " + phone_number + "\nEmail" + email;
     }
     
-    public static UserAccount getUserObjByID(int id) throws SQLException{
-        Connection connection = DatabaseManager.getConnection();
-        
-        // SQL query
-        String getUser = "Select * from user_account where user_id = ?";
-        
-        PreparedStatement pstmt = connection.prepareStatement(getUser);
-        pstmt.setInt(1, id);
-        
-        // Execute query
-        ResultSet rs = pstmt.executeQuery();
-        
-        int userid = rs.getInt("user_id");
-        String firstname = rs.getString("firstname");
-        String lastname = rs.getString("lastname");
-        String phone_number = rs.getString("phone_number");
-        String email = rs.getString("email");
-        
-        UserAccount toReturn = new UserAccount(userid, firstname, lastname, phone_number, email);
-        
-        return toReturn;
-    }
+//    public static UserAccount getUserObjByID(int id) throws SQLException{
+//        Connection connection = DatabaseManager.getConnection();
+//        
+//        // SQL query
+//        String getUser = "Select * from user_account where user_id = ?";
+//        
+//        PreparedStatement pstmt = connection.prepareStatement(getUser);
+//        pstmt.setInt(1, id);
+//        
+//        // Execute query
+//        ResultSet rs = pstmt.executeQuery();
+//        
+//        int userid = rs.getInt("user_id");
+//        String firstname = rs.getString("firstname");
+//        String lastname = rs.getString("lastname");
+//        String phone_number = rs.getString("phone_number");
+//        String email = rs.getString("email");
+//        
+//        UserAccount toReturn = new UserAccount(userid, firstname, lastname, phone_number, email);
+//        
+//        return toReturn;
+//    }
     
     //User information
     public static UserAccount getUserInfo(int userId) throws SQLException{
@@ -75,14 +75,23 @@ public class UserAccount {
         // Execute query
         ResultSet rs = pstmt.executeQuery();
         
-        int userid = rs.getInt("user_id");
-        String firstname = rs.getString("firstname");
-        String lastname = rs.getString("lastname");
-        String phone_number = rs.getString("phone_number");
-        String email = rs.getString("email");
+        int userid = 0;
+        String fName = "";
+        String lName = "";
+        String phoneNum = "";
+        String foundEmail = "";
+        
+        while(rs.next()){
+            userid = rs.getInt("user_id");
+            fName = rs.getString("firstname");
+            lName = rs.getString("lastname");
+            phoneNum = rs.getString("phone_number");
+            foundEmail = rs.getString("email");
+        }
+        
         
         // Create and return User Account object
-        UserAccount account = new UserAccount(userid, firstname, lastname, phone_number, email);
+        UserAccount account = new UserAccount(userid, fName, lName, phoneNum, foundEmail);
         return account;
     }
     

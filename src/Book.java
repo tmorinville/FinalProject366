@@ -290,33 +290,6 @@ public class Book {
         return resultBookList;
     }
 
-    // Helper method for use in the Librarian class
-    public static Book getBookByID(int id) throws SQLException {
-        Connection connection = DatabaseManager.getConnection();
-
-        // SQL select statement
-        String selectBook = "Select * from book where book_id = ?";
-
-        // PreparedStatement
-        PreparedStatement pstmt = connection.prepareStatement(selectBook);
-        pstmt.setInt(1, id);
-
-        // Execute query
-        ResultSet rs = pstmt.executeQuery();
-
-        int bookID = rs.getInt("book_id");
-        String title = rs.getString("title");
-        String author = rs.getString("author");
-        Date publishDate = rs.getDate("publish_date");
-        String isbn = rs.getString("isbn");
-        String description = rs.getString("description");
-        String genre = rs.getString("genre");
-
-        // Create and return new Book object
-        Book book = new Book(bookID, title, author, publishDate, isbn, description, genre);
-        return book;
-    }
-
     // Helper method for use only in the return book method
     private static void removeBookAndUserRow(int bookID, int userID) throws SQLException {
         // Connection

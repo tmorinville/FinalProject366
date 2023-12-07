@@ -22,9 +22,6 @@ public class Librarian {
     public int getLibraryWorksForID() { return libraryWorksForID; }
     
     public static void insertBook(int bookID, int libraryID, int numberOfCopies) throws SQLException{
-        // Get Book object by ID
-        Book bookToInsert = Book.getBookByID(bookID);
-        
         // Connection
         Connection connection = DatabaseManager.getConnection();
         
@@ -35,7 +32,7 @@ public class Librarian {
         // PreparedStatement
         PreparedStatement pstmt = connection.prepareStatement(insertNewBook);
         pstmt.setInt(1, libraryID);
-        pstmt.setInt(2, bookToInsert.getBookID());
+        pstmt.setInt(2, bookID);
         pstmt.setInt(3, numberOfCopies);
         
         // Execute query, returnValue never read because this is a void method
@@ -73,13 +70,22 @@ public class Librarian {
         
         ResultSet rs = pstmt.executeQuery();
         
-        int librarianID = rs.getInt("librarian_id");
-        int libraryID = rs.getInt("library_id");
-        String fName = rs.getString("firstname");
-        String lName = rs.getString("lastname");
-        Date startDate = rs.getDate("start_date");
+        int librarianID = 0;
+        int libraryID = 0;
+        String fName = "";
+        String lName = "";
+        Date start_date = null;
         
-        Librarian objLibrarian = new Librarian(librarianID, libraryID, fName, lName, startDate);
+        while(rs.next()){
+            librarianID = rs.getInt("librarian_id");
+            libraryID = rs.getInt("library_id");
+            fName = rs.getString("firstname");
+            lName = rs.getString("lastname");
+            start_date = rs.getDate("start_date");
+        }
+        
+        
+        Librarian objLibrarian = new Librarian(librarianID, libraryID, fName, lName, start_date);
         
         return objLibrarian;
     }
