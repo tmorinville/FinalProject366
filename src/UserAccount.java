@@ -16,11 +16,11 @@ public class UserAccount {
     
     // Constructor
     public UserAccount(int userID, String fname, String lname, String phoneNumber, String userEmail){
-        user_id = userID;
-        firstname = fname;
-        lastname = lname;
-        phone_number = phoneNumber;
-        email = userEmail;
+        this.user_id = userID;
+        this.firstname = fname;
+        this.lastname = lname;
+        this.phone_number = phoneNumber;
+        this.email = userEmail;
     }
     
     public int getUserID() { return user_id; }
@@ -38,8 +38,31 @@ public class UserAccount {
                 + "\nPhone Number: " + phone_number + "\nEmail" + email;
     }
     
+    public static UserAccount getUserObjByID(int id) throws SQLException{
+        Connection connection = DatabaseManager.getConnection();
+        
+        // SQL query
+        String getUser = "Select * from user_account where user_id = ?";
+        
+        PreparedStatement pstmt = connection.prepareStatement(getUser);
+        pstmt.setInt(1, id);
+        
+        // Execute query
+        ResultSet rs = pstmt.executeQuery();
+        
+        int userid = rs.getInt("user_id");
+        String firstname = rs.getString("firstname");
+        String lastname = rs.getString("lastname");
+        String phone_number = rs.getString("phone_number");
+        String email = rs.getString("email");
+        
+        UserAccount toReturn = new UserAccount(userid, firstname, lastname, phone_number, email);
+        
+        return toReturn;
+    }
+    
     //User information
-    public static UserAccount getUserInfo(int user_id) throws SQLException{
+    public static UserAccount getUserInfo(int userId) throws SQLException{
         Connection connection = DatabaseManager.getConnection();
         
         // SQL select statement
@@ -47,7 +70,7 @@ public class UserAccount {
         
         // PreparedStatement
         PreparedStatement pstmt = connection.prepareStatement(accountInfo);
-        pstmt.setInt(1, user_id);
+        pstmt.setInt(1, userId);
         
         // Execute query
         ResultSet rs = pstmt.executeQuery();
@@ -59,7 +82,7 @@ public class UserAccount {
         String email = rs.getString("email");
         
         // Create and return User Account object
-        UserAccount account = new UserAccount(user_id, firstname, lastname, phone_number, email);
+        UserAccount account = new UserAccount(userid, firstname, lastname, phone_number, email);
         return account;
     }
     

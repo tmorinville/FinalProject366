@@ -19,6 +19,8 @@ public class Librarian {
         startDate = sDate;
     }
     
+    public int getLibraryWorksForID() { return libraryWorksForID; }
+    
     public void insertBook(int bookID, int numberOfCopies) throws SQLException{
         // Get Book object by ID
         Book bookToInsert = Book.getBookByID(bookID);
@@ -61,5 +63,24 @@ public class Librarian {
         return count;
     }
     
-    
+    public static Librarian getLibrarianByID(int id) throws SQLException{
+        Connection connection = DatabaseManager.getConnection();
+        
+        String query = "Select * from librarian where librarian_id = ?";
+        
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setInt(1, id);
+        
+        ResultSet rs = pstmt.executeQuery();
+        
+        int librarianID = rs.getInt("librarian_id");
+        int libraryID = rs.getInt("library_id");
+        String fName = rs.getString("firstname");
+        String lName = rs.getString("lastname");
+        Date startDate = rs.getDate("start_date");
+        
+        Librarian objLibrarian = new Librarian(librarianID, libraryID, fName, lName, startDate);
+        
+        return objLibrarian;
+    }
 }
