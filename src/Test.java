@@ -18,8 +18,13 @@ public class Test {
 //            System.out.println(b.toString());
 //            System.out.println("----------------------------------");
 //        }
+        ArrayList<Library> b = Book.getAllLibraryWithBook(13);
         
-        System.out.println(Librarian.getTotalNumberOfBooks(1));
+        for(Library books : b ){
+            System.out.println(books.getName());
+            System.out.println(books.getLibrary_id());
+            System.out.println("--------");
+        }
     }
     
 }
