@@ -85,6 +85,78 @@ public class Book {
         // Return ArrayList
         return resultBookList;
     }
+
+     public static ArrayList<Book> getSpecifiedBookAtSpecifiedLibrary(int libraryID, int bookID) throws SQLException {
+        Connection connection = DatabaseManager.getConnection();
+
+        // SQL select statement
+        String selectBooks = "SELECT book.book_id, book.title, book.author, book.publish_date, book.isbn, book.description, book.genre, library.name as 'library_name', copies_available FROM available_copies "
+                + "INNER JOIN book ON book.book_id = available_copies.book_id "
+                + "INNER JOIN library ON library.library_id = available_copies.library_id "
+                + "WHERE book.book_id = ? and library.library_id = ?";
+
+        // PreparedStatement
+        PreparedStatement pstmt = connection.prepareStatement(selectBooks);
+        pstmt.setInt(1, bookID);
+        pstmt.setInt(2, libraryID);
+
+        // Execute query
+        ResultSet rs = pstmt.executeQuery();
+
+        // Store results in ArrayList
+        ArrayList<Book> resultBookList = new ArrayList<>();
+        while (rs.next()) {
+            int book_id = rs.getInt("book_id");
+            String title = rs.getString("title");
+            String author = rs.getString("author");
+            Date publishDate = rs.getDate("publish_date");
+            String isbn = rs.getString("isbn");
+            String description = rs.getString("description");
+            String genre = rs.getString("genre");
+
+            // Create object and add to ArrayList
+            Book book = new Book(book_id, title, author, publishDate, isbn, description, genre);
+            resultBookList.add(book);
+        }
+        // Return ArrayList
+        return resultBookList;
+    }
+
+    public static ArrayList<Library> getAllLibraryWithBook(int bookID) throws SQLException {
+        Connection connection = DatabaseManager.getConnection();
+
+        // SQL select statement
+        String selectBooks = "SELECT library_id, library.name, library.street, library.city, library.state, library.zipcode, library.phone_number"
+                + "FROM available_copies "
+                + "INNER JOIN book ON book.book_id = available_copies.book_id "
+                + "INNER JOIN library ON library.library_id = available_copies.library_id "
+                + "WHERE book.book_id = ?";
+
+        // PreparedStatement
+        PreparedStatement pstmt = connection.prepareStatement(selectBooks);
+        pstmt.setInt(1, bookID);
+
+        // Execute query
+        ResultSet rs = pstmt.executeQuery();
+
+        // Store results in ArrayList
+        ArrayList<Library> resultLibraryList = new ArrayList<>();
+        while (rs.next()) {
+            int lib_id = rs.getInt("library_id");
+            String name = rs.getString("name");
+            String street = rs.getString("street");
+            String city = rs.getString("city");
+            String state = rs.getString("state");
+            String zip = rs.getString("zipcode");
+            String phone_number = rs.getString("phone_number");
+
+            // Create object and add to ArrayList
+            Library lib = new Library(lib_id, name, street, city, state, zip, phone_number);
+            resultLibraryList.add(lib);
+        }
+        // Return ArrayList
+        return resultLibraryList;
+    }
     
     public static ArrayList<Book> getBooksFromLibraryByAuthor(int libraryID, String searchAuthor) throws SQLException{
         Connection connection = DatabaseManager.getConnection();
