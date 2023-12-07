@@ -365,8 +365,7 @@ public class Book {
         pstmt.setInt(2, bookID);
         pstmt.setInt(3, libraryID);
 
-        // Execute query
-        ResultSet rs = pstmt.executeQuery();
-        
+        // Execute query, value never read
+        int execute = pstmt.executeUpdate();
     }
 }

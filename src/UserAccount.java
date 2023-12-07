@@ -15,12 +15,12 @@ public class UserAccount {
     private String email;
     
     // Constructor
-    public UserAccount(int user_id, String firstname, String lastname, String phone_number, String email){
-        user_id = this.user_id;
-        firstname = this.firstname;
-        lastname = this.lastname;
-        phone_number = this.phone_number;
-        email = this.email;
+    public UserAccount(int userID, String fname, String lname, String phoneNumber, String userEmail){
+        user_id = userID;
+        firstname = fname;
+        lastname = lname;
+        phone_number = phoneNumber;
+        email = userEmail;
     }
     
     public int getUserID() { return user_id; }
