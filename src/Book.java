@@ -351,5 +351,22 @@ public class Book {
         // Execute query, returnValue never read 
         int returnValue = pstmt.executeUpdate();
     }
+    private static void updateAvailableCopies(int bookID, int libraryID, int shift){
+        Connection connection = DatabaseManager.getConnection();
 
+        // SQL select statement
+        String updateQuery = "UPDATE available_copies
+                SET copies_available = copies_available + ?
+                WHERE available_copies.book_id = ? and available_copies.library_id = ?"
+
+        // PreparedStatement
+        PreparedStatement pstmt = connection.prepareStatement(updateQuery);
+        pstmt.setInt(1, shift);
+        pstmt.setInt(2, bookID);
+        pstmt.setInt(3, libraryID);
+
+        // Execute query
+        ResultSet rs = pstmt.executeQuery();
+        
+    }
 }
