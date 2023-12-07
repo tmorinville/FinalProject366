@@ -266,7 +266,5 @@ public class Book {
         int returnValue = pstmt.executeUpdate();
     }
     
-    public void returnBook(int book_id) throws SQLException{
-
-    }
+      
 }

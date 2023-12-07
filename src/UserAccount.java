@@ -67,8 +67,9 @@ public class UserAccount {
     public static ArrayList<Book> viewBooksCheckedOut(int user_id) throws SQLException{
         Connection connection = DatabaseManager.getConnection();
         
+        
         // SQL select statement
-        String outBooks = "SELECT * FROM books_checked_out WHERE user_id = ?";
+        String outBooks = "SELECT * FROM books_checked_out WHERE user_id = ?"; //this will be changed today(12/7)
                 
         // PreparedStatement
         PreparedStatement pstmt = connection.prepareStatement(outBooks);
@@ -95,6 +96,12 @@ public class UserAccount {
         return resultBookList;
     }
     //check out book
+     public void checkOutBook(int book_id){
+         
+         
+     }
     //return book
+     public void returnBook(int book_id) throws SQLException{
 
+    } 
 }
