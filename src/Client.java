@@ -48,6 +48,19 @@ public class Client {
                 choice = MenuHelper.scanChoice(prompt, 1, 9);
                 
                 if(choice == 1){
+                    int bookID = Integer.parseInt(MenuHelper.getString("Enter the book id of the book you want to return: "));
+                    int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to return the book: "));
+                    int userID = currentUser.getUserID(); 
+                    
+                    try{
+                        Book.returnBook(bookID, libraryID, userID);
+                        System.out.println("Successfully return book.");
+                    }
+                    catch(SQLException ex){
+                        System.out.println("Invalid book id or library id, cannot return book.");
+                    }
+                }
+                else if(choice == 2){                 
                     int bookID = Integer.parseInt(MenuHelper.getString("Enter the book id of the book you want to check out: "));
                     int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to check out the book: "));
                     int userID = currentUser.getUserID();
@@ -59,18 +72,9 @@ public class Client {
                     catch(SQLException ex){
                         System.out.println("Invalid book id or library id, cannot check out book.");
                     }
-                }
-                else if(choice == 2){
-                    int bookID = Integer.parseInt(MenuHelper.getString("Enter the book id of the book you want to return: "));
-                    int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to return the book: "));
-                    int userID = currentUser.getUserID(); 
                     
-                    try{
-                        Book.returnBook(bookID, libraryID, userID);
-                        System.out.println("Successfully return book.");
-                    }
-                    catch(SQLException ex){
-                        System.out.println("Invalid book id or library id, cannot return book.");
+                    catch(IllegalArgumentException ex){
+                        System.out.println(ex.getMessage());
                     }
                 }
                 else if(choice == 3){
@@ -185,7 +189,6 @@ public class Client {
                    
                    currentLibrarian = Librarian.getLibrarianByID(librarianID);
                    badInput = false;
-                   System.out.println("Success!!!!!");
                 }
                 catch(SQLException ex){
                     System.out.println("Invalid librarian id, try again.");
@@ -223,6 +226,6 @@ public class Client {
         }
         
         // Ending the program
-        System.out.println("Ending program.");
+        System.out.println("Program has ended.");
     }
 }

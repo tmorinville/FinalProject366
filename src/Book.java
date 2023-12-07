@@ -324,7 +324,7 @@ public class Book {
         // Execute query, returnValue never read 
         int returnValue = pstmt.executeUpdate();
     }
-    private static void updateAvailableCopies(int bookID, int libraryID, int shift) throws SQLException{
+    private static int updateAvailableCopies(int bookID, int libraryID, int shift) throws SQLException{
         Connection connection = DatabaseManager.getConnection();
 
         // SQL select statement
@@ -340,12 +340,18 @@ public class Book {
 
         // Execute query, value never read
         int execute = pstmt.executeUpdate();
+        return execute;
     }
     //check out book
      public static void checkOutBook(int bookID, int libraryID, int userID) throws SQLException{
-         Connection connection = DatabaseManager.getConnection();
-         Book.addBookAndUserRow(bookID, userID);
-         Book.updateAvailableCopies(bookID, libraryID, -1);
+        // Try to update available copies
+        int updated = Book.updateAvailableCopies(bookID, libraryID, -1);
+        
+        // Use int to verify if the book exists at the library
+        if(updated != 0)
+            Book.addBookAndUserRow(bookID, userID);
+        else
+            throw new IllegalArgumentException("Unable to check out book, not available at this library.");
      }
     //return book
      public static void returnBook(int bookID, int libraryID, int userID) throws SQLException{

@@ -5,7 +5,7 @@
 import java.sql.*;
 public class DatabaseManager {
     // Taya's connection information
-    static String jdbcURL = "jdbc:postgresql://localhost:5432/Assignment9FinalRun";
+    static String jdbcURL = "jdbc:postgresql://localhost:5432/FinalProject366";
     static String username = "postgres";
     static String password = "Taya101603!";
 
