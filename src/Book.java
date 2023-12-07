@@ -369,15 +369,15 @@ public class Book {
         int execute = pstmt.executeUpdate();
     }
     //check out book
-     public void checkOutBook(int bookID, int libraryID) throws SQLException{
+     public void checkOutBook(int bookID, int libraryID, int userID) throws SQLException{
          Connection connection = DatabaseManager.getConnection();
-         
+         Book.addBookAndUserRow(bookID, userID);
          Book.updateAvailableCopies(bookID, libraryID, -1);
      }
     //return book
-     public static void returnBook(int bookID, int libraryID) throws SQLException{
+     public static void returnBook(int bookID, int libraryID, int userID) throws SQLException{
          Connection connection = DatabaseManager.getConnection();
-
+         Book.removeBookAndUserRow(bookID, userID);
          Book.updateAvailableCopies(bookID, libraryID, 1);
     } 
 }
