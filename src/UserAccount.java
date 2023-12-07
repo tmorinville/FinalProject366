@@ -3,6 +3,10 @@
  *
  * @author Alyssa
  */
+
+import java.sql.*;
+import java.util.ArrayList;
+
 public class UserAccount {
     private int user_id;
     private String firstname;
@@ -11,12 +15,12 @@ public class UserAccount {
     private String email;
     
     // Constructor
-    public UserAccount(int userid, String firstname, String lname, String phone_number, String email){
-        user_id = userid;
-        firstname = firstname;
-        lastname = lname;
-        phone_number = phone_number;
-        email = email;
+    public UserAccount(int user_id, String firstname, String lastname, String phone_number, String email){
+        user_id = this.user_id;
+        firstname = this.firstname;
+        lastname = this.lastname;
+        phone_number = this.phone_number;
+        email = this.email;
     }
     
     public int getUserID() { return user_id; }
@@ -33,7 +37,64 @@ public class UserAccount {
         return "User Info " + user_id + "\nName: " + firstname + " " + lastname
                 + "\nPhone Number: " + phone_number + "\nEmail" + email;
     }
+    
+    //User information
+    public static UserAccount getUserInfo(int user_id) throws SQLException{
+        Connection connection = DatabaseManager.getConnection();
+        
+        // SQL select statement
+        String accountInfo = "Select * from user_account WHERE user_id = ?";
+        
+        // PreparedStatement
+        PreparedStatement pstmt = connection.prepareStatement(accountInfo);
+        pstmt.setInt(1, user_id);
+        
+        // Execute query
+        ResultSet rs = pstmt.executeQuery();
+        
+        int userid = rs.getInt("user_id");
+        String firstname = rs.getString("firstname");
+        String lastname = rs.getString("lastname");
+        String phone_number = rs.getString("phone_number");
+        String email = rs.getString("email");
+        
+        // Create and return User Account object
+        UserAccount account = new UserAccount(user_id, firstname, lastname, phone_number, email);
+        return account;
+    }
+    
     //view books checked out
+    public static ArrayList<Book> viewBooksCheckedOut(int user_id) throws SQLException{
+        Connection connection = DatabaseManager.getConnection();
+        
+        // SQL select statement
+        String outBooks = "SELECT * FROM books_checked_out WHERE user_id = ?";
+                
+        // PreparedStatement
+        PreparedStatement pstmt = connection.prepareStatement(outBooks);
+        pstmt.setInt(1, user_id);        
+        
+        // Execute query
+        ResultSet rs = pstmt.executeQuery();
+        
+        ArrayList<Book> resultBookList = new ArrayList<>();
+        while(rs.next()){
+            int bookID = rs.getInt("book_id");
+            String title = rs.getString("title");
+            String author = rs.getString("author");
+            Date publishDate = rs.getDate("publish_date");
+            String isbn = rs.getString("isbn");
+            String description = rs.getString("description");
+            String genre = rs.getString("genre");
+            
+            // Create object and add to ArrayList
+            Book book = new Book(bookID, title, author, publishDate, isbn, description, genre);
+            resultBookList.add(book);
+        }
+        // Return ArrayList
+        return resultBookList;
+    }
     //check out book
     //return book
+
 }
