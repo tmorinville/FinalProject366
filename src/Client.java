@@ -8,7 +8,13 @@ import java.util.InputMismatchException;
 public class Client {
     public static void main(String[] args) {
         // Ask if librarian or user, store as a 1 if user and store as a 2 if libarian
-        int userOrLibrarian = MenuHelper.scanChoice("Enter 1 if a user or 2 if a librarian: ", 1, 2);
+        int userOrLibrarian = 0;
+        try{
+            userOrLibrarian = MenuHelper.scanChoice("Enter 1 if a user or 2 if a librarian: ", 1, 2);
+        }
+        catch(InputMismatchException ex){
+            System.out.println("Invalid choice entered.");
+        }
         
         if(userOrLibrarian == 1){ 
             UserAccount currentUser = null; // UserAccount logged in
@@ -48,26 +54,30 @@ public class Client {
                 choice = MenuHelper.scanChoice(prompt, 1, 9);
                 
                 if(choice == 1){
-                    int bookID = Integer.parseInt(MenuHelper.getString("Enter the book id of the book you want to return: "));
-                    int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to return the book: "));
-                    int userID = currentUser.getUserID(); 
-                    
                     try{
+                        int bookID = Integer.parseInt(MenuHelper.getString("Enter the book id of the book you want to return: "));
+                        int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to return the book: "));
+                        int userID = currentUser.getUserID(); 
                         Book.returnBook(bookID, libraryID, userID);
                         System.out.println("Successfully return book.");
+                    }
+                    catch (NumberFormatException ex) {
+                        System.out.println("Invalid information entered.");
                     }
                     catch(SQLException ex){
                         System.out.println("Invalid book id or library id, cannot return book.");
                     }
                 }
-                else if(choice == 2){                 
-                    int bookID = Integer.parseInt(MenuHelper.getString("Enter the book id of the book you want to check out: "));
-                    int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to check out the book: "));
-                    int userID = currentUser.getUserID();
-                    
+                else if(choice == 2){
                     try{
+                        int bookID = Integer.parseInt(MenuHelper.getString("Enter the book id of the book you want to check out: "));
+                        int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to check out the book: "));
+                        int userID = currentUser.getUserID();
                         Book.checkOutBook(bookID, libraryID, userID);
                         System.out.println("Successfully checked out book.");
+                    }
+                    catch (NumberFormatException ex) {
+                        System.out.println("Invalid information entered.");
                     }
                     catch(SQLException ex){
                         System.out.println("Invalid book id or library id, cannot check out book.");
@@ -78,45 +88,53 @@ public class Client {
                     }
                 }
                 else if(choice == 3){
-                    int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to search: "));
-                    String author = MenuHelper.getString("Enter the author you wish to search for: ");
-                    
                     try{
+                        int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to search: "));
+                        String author = MenuHelper.getString("Enter the author you wish to search for: ");
                         ArrayList<Book> books = Book.getBooksFromLibraryByAuthor(libraryID, author);
                         for(Book b : books){
                             System.out.println(b.toString());
                             System.out.println("-----------------------");
                         }
                     }
+                    catch (NumberFormatException ex) {
+                        System.out.println("Invalid information entered.");
+                    }
                     catch(SQLException ex){
                         System.out.println("Invalid library id or author name, cannot search for books.");
                     }
                 }
                 else if(choice == 4){
-                    int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to search: "));
-                    String title = MenuHelper.getString("Enter the title you wish to search for: ");
-                    
                     try{
+                        int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to search: "));
+                        String title = MenuHelper.getString("Enter the title you wish to search for: ");
+                    
                         ArrayList<Book> books = Book.getBooksByTitle(libraryID, title);
                         for(Book b : books){
                             System.out.println(b.toString());
                             System.out.println("---------------------");
                         }
                     }
+                    catch (NumberFormatException ex) {
+                        System.out.println("Invalid information entered.");
+                    }
                     catch(SQLException ex){
                         System.out.println("Invalid library id or title, cannot search for books.");
                     }
                 }
                 else if(choice == 5){
-                    int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to search: "));
-                    String genre = MenuHelper.getString("Enter the genre you wish to search for: ");
-                    
                     try{
+                        int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to search: "));
+                        String genre = MenuHelper.getString("Enter the genre you wish to search for: ");
+                    
                         ArrayList<Book> books = Book.getBooksByGenre(libraryID, genre);
                         for(Book b : books){
                             System.out.println(b.toString());
                             System.out.println("---------------------");
                         }
+                    }
+                    catch (NumberFormatException ex) {
+                        System.out.println("Invalid information entered.");
                     }
                     catch(SQLException ex){
                         System.out.println("Invalid library id or genre, cannot search for books.");
@@ -134,44 +152,53 @@ public class Client {
                         System.out.println("You have no books checked out.");
                     }
                 }
-                else if(choice == 7){
-                    int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to search: "));
-                                        
+                else if(choice == 7){              
                     try{
+                        int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you wish to search: "));
+                    
                         ArrayList<Book> books = Book.getAllBooksFromLibrary(libraryID);
                         for(Book b : books){
                             System.out.println(b.toString());
                             System.out.println("-----------------------");
                         }
                     }
+                    catch (NumberFormatException ex) {
+                        System.out.println("Invalid information entered.");
+                    }
                     catch(SQLException ex){
                         System.out.println("Invalid library id, cannot search for books.");
                     }
                 }
                 else if(choice == 8){
-                    int bookID = Integer.parseInt(MenuHelper.getString("Enter the book id of the book you want to search for: "));
-                    int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you want to search for the book: "));
-                    
                     try{
+                        int bookID = Integer.parseInt(MenuHelper.getString("Enter the book id of the book you want to search for: "));
+                        int libraryID = Integer.parseInt(MenuHelper.getString("Enter the library id where you want to search for the book: "));
+                    
                         ArrayList<Book> books = Book.getSpecifiedBookAtSpecifiedLibrary(libraryID, bookID);
                         for(Book b : books){
                             System.out.println(b.toString());
                             System.out.println("-----------------------");
                         }
                     }
+                    catch (NumberFormatException ex) {
+                        System.out.println("Invalid information entered.");
+                    }
                     catch(SQLException ex){
                         System.out.println("Invalid book id or library id, cannot search for books");
                     }
                 }
                 else if(choice == 9){
-                    int bookID = Integer.parseInt(MenuHelper.getString("Enter the book id of the book you want to search for: "));
-                   
                     try{
+                        int bookID = Integer.parseInt(MenuHelper.getString("Enter the book id of the book you want to search for: "));
+                   
                        ArrayList<Library> libraries = Book.getAllLibraryWithBook(bookID);
                        for(Library l : libraries){
                            System.out.println(l.toString());
                            System.out.println("---------------------");
                        }
+                    }
+                    catch (NumberFormatException ex) {
+                        System.out.println("Invalid information entered.");
                     }
                     catch(SQLException ex){
                         System.out.println("Invalid book id, cannot search for libraries.");
@@ -211,12 +238,15 @@ public class Client {
                     }
                 }
                 else if(choice == 2){
-                    int insertBookID = Integer.parseInt(MenuHelper.getString("Enter the book id: "));
-                    int numCopies = Integer.parseInt(MenuHelper.getString("Enter the number of copies: "));
-                    
                     try{
+                        int insertBookID = Integer.parseInt(MenuHelper.getString("Enter the book id: "));
+                        int numCopies = Integer.parseInt(MenuHelper.getString("Enter the number of copies: "));
+                    
                         Librarian.insertBook(insertBookID, currentLibrarian.getLibraryWorksForID(), numCopies);
                         System.out.println("Successfully inserted book to library.");
+                    }
+                    catch (NumberFormatException ex) {
+                        System.out.println("Invalid information entered.");
                     }
                     catch(SQLException ex){
                         System.out.println("Invalid book id, unable to add to library.");
